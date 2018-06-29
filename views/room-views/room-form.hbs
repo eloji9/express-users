@@ -1,0 +1,35 @@
+<h2>
+    Add a Room
+</h2>
+
+{{> flashMessages}}
+
+<form method="POST" action="/process-room">
+
+    <label>
+        Name :
+        <input type="text" name="name" placeholder="Cosy studio in Paris"/>
+    </label>
+    <br/>
+
+    <label>
+        Description :
+        <input type="text" name="desc" placeholder="Move around Paris by without taking public transportations"/>
+    </label>
+    <br/>
+
+    <label>
+        Picture URL :
+        <input type="text" name="pictureUrl" placeholder="http://example.com/room.jpg"/>
+    </label>
+    <br/>
+
+    <button>
+        Save This Room
+    </button>
+
+    {{!-- <p>
+        Add Another Room ?? <a href="/room/add">New Room</a>
+    </p> --}}
+
+</form>

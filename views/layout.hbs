@@ -5,8 +5,44 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+    <header>
+      <h1>
+        Express Users
+      </h1>
+      <nav>
+        <a href="/">Home Page</a>
+
+        {{# if blahUser}}
+
+        <strong>Welcome {{blahUser.fullName}}</strong>
+        <a href="/my-rooms">My Rooms</a>
+        <a href="/room/add">Add a Room</a>
+        <a href="/settings">Settings</a>
+        <a href="/logout">Log out</a>
+
+        {{#if blahUser.isAdmin}}
+          {{!-- "isAdmin" is a virtual (fake) propriety defined in the model --}}
+          <h3>
+            Admin Zone
+          </h3>
+          <a href="/admin/users">User Management</a>
+        {{/if}}
+
+        {{else}}
+
+        <a href="/signup">Sign Up</a>
+        <a href="/login">Log In</a>
+
+        {{/if}}
+      </nav>
+    </header>
 
     {{{body}}}
+
+    <footer>
+      Love & Tenderness
+      <br/>From 🐫
+    </footer>
 
     <script src='/javascripts/script.js'></script>
   </body>
