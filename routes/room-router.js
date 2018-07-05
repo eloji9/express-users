@@ -4,6 +4,30 @@ const router = express.Router();
 
 const Room = require("../models/room-model.js")
 
+// To upload a file !
+// ------------------------------------
+const multer = require("multer");
+const cloudinary = require("cloudinary")
+const cloudinaryStorage = require ("multer-storage-cloudinary");
+
+cloudinary.config({
+    cloud_name: process.env.cloudinary_name,
+    api_key:process.env.cloudinary_key,
+    api_secret:process.env.cloudinary_secret,
+})
+
+const storage =
+    cloudinaryStorage({
+        cloudinary,
+        folder: "room-pictures"
+    });
+const uploader = multer({storage});
+
+// ------------------------------------
+
+
+
+
 router.get("/room/add",(req,res,next)=>{
     if (!req.user){
         // "req.flash()" is defined by the "connect-flash" package
@@ -15,7 +39,11 @@ router.get("/room/add",(req,res,next)=>{
     res.render("room-views/room-form.hbs")
 });
 
-router.post("/process-room", (req,res,next)=>{
+router.post("/process-room", uploader.single("pictureUpload"), (req,res,next)=>{
+
+    // res.send(req.file);
+    // return;
+
     if (!req.user){
         // "req.flash()" is defined by the "connect-flash" package
         req.flash("error","You must be logged in!");
@@ -23,9 +51,14 @@ router.post("/process-room", (req,res,next)=>{
         res.redirect("/login");
         return;
       }
-    // res.send(req.body);
+
     const {name,desc,pictureUrl} = req.body;
-    Room.create({owner : req.user._id,name,desc,pictureUrl})
+    const {secure_url} = req.file;
+    Room.create({
+        owner : req.user._id,
+        name,
+        desc,
+        pictureUrl : secure_url})
     .then((roomDoc)=>{
         req.flash("success", "Room created !")
         res.redirect("/");

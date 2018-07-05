@@ -4,7 +4,7 @@
 
 {{> flashMessages}}
 
-<form method="POST" action="/process-room">
+<form method="POST" action="/process-room" enctype="multipart/form-data">
 
     <label>
         Name :
@@ -19,8 +19,8 @@
     <br/>
 
     <label>
-        Picture URL :
-        <input type="text" name="pictureUrl" placeholder="http://example.com/room.jpg"/>
+        Picture :
+        <input type="file" name="pictureUpload"/>
     </label>
     <br/>
 
